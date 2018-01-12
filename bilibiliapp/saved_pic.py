@@ -23,20 +23,18 @@ def unix_time_to_normal(time):
 
 
 if r.status_code == 200:
-    print(r.json())
     data_json = r.json()
-    code = data_json['code']
+    print(data_json)
 
+    code = data_json['code']
     if code == 0:
         data_list = data_json['data']
 
         for i in data_list:
-            pic_obj = BilibiliApp.objects.get(pic_id=i['id'])
+            start_time = unix_time_to_normal(i['start_time'])
+            end_time = unix_time_to_normal(i['end_time'])
 
-            if pic_obj is None:
-                start_time = unix_time_to_normal(i['start_time'])
-                end_time = unix_time_to_normal(i['end_time'])
+            pic_obj = BilibiliApp.objects.update_or_create(pic_id=i['id'], img_url=i['image'],
+                                                           start_time=start_time, end_time=end_time)
 
-                bilibili = BilibiliApp(pic_id=i['id'], img_url=i['image'],
-                                       start_time=start_time, end_time=end_time)
-                bilibili.save()
+            print(BilibiliApp.objects.get(pic_id=i['id']).to_json())

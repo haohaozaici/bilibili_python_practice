@@ -1,8 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from django.http import HttpResponse
 import markdown
-import json
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from bilibiliapp.models import Post, BilibiliApp

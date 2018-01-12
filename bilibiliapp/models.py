@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+import json
 
 
 # Create your models here.
@@ -41,10 +42,11 @@ class Post(models.Model):
 
 
 class BilibiliApp(models.Model):
-
     pic_id = models.IntegerField()
     img_url = models.CharField(max_length=1000)
     start_time = models.CharField(max_length=100)
     end_time = models.CharField(max_length=100)
 
-
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
